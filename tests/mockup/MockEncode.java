@@ -22,14 +22,13 @@ public class MockEncode {
         possibleKeysForThree[0] = "i";
     }
 
+    /** getters */
     public String[] getPossibleKeysForOne() {
         return possibleKeysForOne;
     }
-
     public String[] getPossibleKeysForTwo() {
         return possibleKeysForTwo;
     }
-
     public String[] getPossibleKeysForThree() {
         return possibleKeysForThree;
     }
