@@ -21,5 +21,18 @@ class SearchTest {
     void searchForNonWord(){
         assertEquals(false,search.forWord(notAWord));
     }
+    
+    @Test void searchForAllWordsThatBeginWithInputChar(){
+        String[] dictionarySubset, testDictionary;
+        char input = 'a';
+        testDictionary = new String[3];
+        testDictionary[0] = "aaa";
+        testDictionary[1] = "abc";
+        testDictionary[2] = "a";
+        
+        dictionarySubset = search.getWordsThatStartWith(input);
+        assertArrayEquals(testDictionary,dictionarySubset);
+        
+    }
 
 }

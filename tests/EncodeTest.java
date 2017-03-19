@@ -28,7 +28,6 @@ class EncodeTest {
 
         possibleKeys = encode.getPossibleKeys('$');
         assertEquals(null,possibleKeys);
-
     }
 
     @Test
