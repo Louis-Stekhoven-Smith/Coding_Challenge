@@ -11,10 +11,11 @@ public class Search {
         System.arraycopy(dictionary, 0, this.dictionary, 0, dictionary.length );
     }
 
+    /* checks string for complete match with a word*/
     public Boolean forWord(String word) {
 
         for (int i = 0; i < dictionary.length; i++) {
-            if (dictionary[i].equals(word)) {
+            if (word.equals(dictionary[i])) {
                 return true;
             }
         }
