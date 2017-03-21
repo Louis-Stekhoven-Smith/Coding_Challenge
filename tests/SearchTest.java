@@ -40,12 +40,14 @@ class SearchTest {
         assertArrayEquals(testDictionary,dictionarySubset);
     }
 
-    @Test void searchForWordThatDoesNotExist(){
+    @Test void searchForWordThatStartsWithCharThatDoesNotExist(){
         String[] dictionarySubset;
         char input = 'k';
-        
+
         dictionarySubset = search.getWordsThatStartWith(input);
         assertEquals(null,dictionarySubset);
     }
+
+
 
 }
