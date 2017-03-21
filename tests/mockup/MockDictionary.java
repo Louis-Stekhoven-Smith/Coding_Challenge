@@ -10,12 +10,12 @@ public class MockDictionary {
 
     public String[] getDictionary() {
         String[] dictionary = new String[6];
-        dictionary[0] = "aaa";
-        dictionary[1] = "bbb";
-        dictionary[2] = "ccc";
-        dictionary[3] = "abc";
-        dictionary[4] = "b";
-        dictionary[5] = "a";
+        dictionary[0] = "AAA";
+        dictionary[1] = "BBB";
+        dictionary[2] = "CCC";
+        dictionary[3] = "ABC";
+        dictionary[4] = "B";
+        dictionary[5] = "A";
 
         return dictionary;
     }

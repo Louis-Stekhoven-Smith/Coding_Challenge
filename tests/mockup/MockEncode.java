@@ -9,17 +9,17 @@ public class MockEncode {
     private String[] possibleKeysForThree = new String[3];
 
     public MockEncode(){
-        possibleKeysForOne[0] = "a";
-        possibleKeysForOne[0] = "b";
-        possibleKeysForOne[0] = "c";
+        possibleKeysForOne[0] = "A";
+        possibleKeysForOne[0] = "B";
+        possibleKeysForOne[0] = "C";
 
-        possibleKeysForTwo[0] = "d";
-        possibleKeysForTwo[0] = "e";
-        possibleKeysForTwo[0] = "f";
+        possibleKeysForTwo[0] = "D";
+        possibleKeysForTwo[0] = "E";
+        possibleKeysForTwo[0] = "F";
 
-        possibleKeysForThree[0] = "g";
-        possibleKeysForThree[0] = "h";
-        possibleKeysForThree[0] = "i";
+        possibleKeysForThree[0] = "G";
+        possibleKeysForThree[0] = "H";
+        possibleKeysForThree[0] = "I";
     }
 
     /** getters */

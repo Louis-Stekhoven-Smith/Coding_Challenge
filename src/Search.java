@@ -9,16 +9,14 @@ public class Search {
     private String[] dictionary;
 
     public Search(String[] dictionary) {
-
-        this.dictionary = new String[dictionary.length];
-        System.arraycopy(dictionary, 0, this.dictionary, 0, dictionary.length);
+        this.dictionary = dictionary;
     }
 
     /**
      * checks string for complete match with a word
      */
     public Boolean forWord(String word) {
-
+        word = word.toUpperCase();
         for (int i = 0; i < dictionary.length; i++) {
             if (word.equals(dictionary[i])) {
                 return true;
@@ -27,13 +25,19 @@ public class Search {
         return false;
     }
 
-    public String[] getWordsThatStartWith(char input) {
+    public String[] getWordsThatMatch(char input, int position) {
         ArrayList<String> matchedWords = new ArrayList<String>();
+        input = Character.toUpperCase(input);
 
         for (int i = 0; i < dictionary.length; i++) {
-            if (dictionary[i].charAt(0) == input) {
-                matchedWords.add(dictionary[i]);
+            try {
+                if (dictionary[i].charAt(position) == input) {
+                    matchedWords.add(dictionary[i]);
+                }
             }
+            catch(Exception e){
+                    System.out.println("getWordsThatMatch " + e.getMessage());
+                }
         }
         if (noWordsFound(matchedWords)) {
             return null;
