@@ -12,14 +12,14 @@ class SearchTest {
     private String notAWord = "bbc";
     private MockDictionary dictionary = new MockDictionary();
     private Search search = new Search(dictionary.getDictionary());
-    private static String[] testDictionary = new String[3];
+    private static String[] testSubsetDictionary = new String[3];
 
 
     @BeforeAll
     public static void setUp(){
-        testDictionary[0] = "aaa";
-        testDictionary[1] = "abc";
-        testDictionary[2] = "a";
+        testSubsetDictionary[0] = "aaa";
+        testSubsetDictionary[1] = "abc";
+        testSubsetDictionary[2] = "a";
     }
 
     @Test
@@ -37,7 +37,7 @@ class SearchTest {
         char input = 'a';
 
         dictionarySubset = search.getWordsThatStartWith(input);
-        assertArrayEquals(testDictionary,dictionarySubset);
+        assertArrayEquals(testSubsetDictionary,dictionarySubset);
     }
 
     @Test void searchForWordThatStartsWithCharThatDoesNotExist(){
