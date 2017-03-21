@@ -28,15 +28,17 @@ public class Search {
     public String[] getWordsThatStartWith(char input){
         ArrayList<String> matchedWords = new ArrayList<String>();
 
-        for(int i  = 0; i < dictionary.length; i++){
+        for(int i = 0; i < dictionary.length; i++){
             if(dictionary[i].charAt(0) == input){
                 matchedWords.add(dictionary[i]);
             }
         }
-        /*TODO*/
-        /** need to write rest of code to pass test */
-        return null;
-
+        if(matchedWords.size() < 1){
+            System.out.println();
+            return null;
+        }
+        else{
+            return matchedWords.toArray(new String[matchedWords.size()]);
+        }
     }
-
 }
