@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -12,9 +11,7 @@ public class Search {
         this.dictionary = dictionary;
     }
 
-    /**
-     * checks string for complete match with a word
-     */
+    /** checks string for complete match with a word */
     public Boolean forWord(String word) {
         word = word.toUpperCase();
         for (int i = 0; i < dictionary.length; i++) {
@@ -25,8 +22,9 @@ public class Search {
         return false;
     }
 
+    /** Returns a subset of words that have a matching char in the given postion of the string */
     public String[] getWordsThatMatch(char input, int position) {
-        ArrayList<String> matchedWords = new ArrayList<String>();
+        ArrayList<String> matchedWords = new ArrayList<>();
         input = Character.toUpperCase(input);
 
         for (int i = 0; i < dictionary.length; i++) {

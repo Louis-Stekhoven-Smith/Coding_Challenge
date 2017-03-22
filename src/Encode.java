@@ -12,7 +12,7 @@ public class Encode {
     }
 
     /** returns the charaters that match the input */
-    public char[] getPossibleKeys(char charInput){
+    public static char[] getPossibleKeys(char charInput){
 
         int intInput;
         String code;
@@ -57,7 +57,7 @@ public class Encode {
     }
 
     /** Helpers */
-    private char[] possibleKeys(String code){
+    private static char[] possibleKeys(String code){
 
         char[] keys;
         int size = code.length();

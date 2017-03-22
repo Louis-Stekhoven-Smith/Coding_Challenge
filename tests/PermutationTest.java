@@ -16,14 +16,12 @@ class PermutationTest {
 
     @BeforeAll
     public static void setUp() {
-
         dictionary[0] = "AAA";
         dictionary[1] = "BBB";
         dictionary[2] = "CCC";
         dictionary[3] = "ABC";
-        dictionary[4] = "B";
+        dictionary[4] = "BC";
         dictionary[5] = "A";
-
 
     }
 
@@ -34,15 +32,15 @@ class PermutationTest {
     }
 
     @Test
-    void initiliseClass() {
-        permutation = new Permutation("A", currentPosition, remainingInput, dictionary);
-        assertEquals(permutation.getPermutation(), "A");
+    void initialiseClass() {
+        permutation = new Permutation("A", currentPosition, null, dictionary);
+        assertEquals( "A",permutation.getPermutation());
 
     }
 
     @Test
-    void passInProcedingChars() {
-        remainingInput = "1";
+    void permutationDoesNotMatchWord() {
+        remainingInput = null;
         int position = 2;
         permutation = new Permutation("ABE", position, remainingInput, dictionary);
         assertEquals("ABE", permutation.getPermutation());
@@ -61,11 +59,32 @@ class PermutationTest {
         assertEquals(false, permutation.hasWordsMatching());
     }
 
-    /*TODO add a check if current permutation matches a word*/
     @Test
-    void wordMatchesCurrentPermutation() {
-
+    void permutationMatchesWord(){
+        remainingInput = null;
+        permutation = new Permutation("ABC", 2, remainingInput, dictionary);
+        assertEquals(true, permutation.isAWord());
+        assertEquals("ABC",permutation.getPermutation());
     }
+
+    @Test
+    void permutationMatchesWordButStillHaveMoreNumbsToEncode(){
+        permutation = new Permutation("A",0,"22",dictionary);
+        assertEquals("A-",permutation.getPermutation());
+    }
+
+    @Test
+    void contiunesToProcessPermutationsUntilWordFound(){
+        permutation = new Permutation("C",0,"22",dictionary);
+        assertEquals("CCC",permutation.getFoundWord());
+    }
+
+    @Test
+    void ignoresWordsThatDoNotGiveFullEncoding(){
+        permutation = new Permutation("B",0,"22",dictionary);
+        assertEquals("BBB",permutation.getFoundWord());
+    }
+
 }
 
     /*TODO add a check if current permutation does not match a word*/
