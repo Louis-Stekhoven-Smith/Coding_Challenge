@@ -80,9 +80,15 @@ class PermutationTest {
     }
 
     @Test
+    void InputStringWithLength1(){
+        permutation = new Permutation("B",0,null,dictionary);
+        assertEquals(null,permutation.getFoundWord());
+    }
+
+    @Test
     void ignoresWordsThatDoNotGiveFullEncoding(){
-        permutation = new Permutation("B",0,"22",dictionary);
-        assertEquals("BBB",permutation.getFoundWord());
+        permutation = new Permutation("BC",1,"4",dictionary);
+        assertEquals(null,permutation.getFoundWord());
     }
 
 }
