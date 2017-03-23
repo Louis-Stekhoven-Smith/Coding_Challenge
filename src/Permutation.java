@@ -67,7 +67,6 @@ public class Permutation {
         possibleKeys = encode.getPossibleKeys(remainingInput.charAt(nextInputNumber));
         newRemainingInput = setRemainingInput();
         currentPositionInString++;
-
            /* System.out.println("Input " + remainingInput + " new string " + sb.toString());*/
         for(int i = 0; i < possibleKeys.length; i++){
             generateNewPermutation(possibleKeys[i], newRemainingInput);
@@ -84,7 +83,6 @@ public class Permutation {
         /** No more char left to encode  */
         if (sb.length() == 0) {
             newRemainingInput = null;
-            /*System.out.println("Set too null");*/
         } else {
             newRemainingInput = sb.toString();
         }
@@ -117,7 +115,6 @@ public class Permutation {
         return false;
     }
 
-
     /** Narrow down the dictionary so that it only contains words that can  potentially match */
     private void generateNewSubDictionary(){
         char currentChar;
@@ -138,15 +135,12 @@ public class Permutation {
         }
         else return true;
     }
-
     public Boolean isAWord(){
         return isAWord;
     }
-
     public String getPermutation(){
         return currentPermutation;
     }
-
     public String getFoundWord(){
         return foundWord;
     }
