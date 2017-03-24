@@ -47,7 +47,6 @@ public class Search {
     /**helpers */
     private Boolean noWordsFound(ArrayList<String> matchedWords) {
         if (matchedWords.size() < 1) {
-            System.out.println();
             return true;
         }
         return false;

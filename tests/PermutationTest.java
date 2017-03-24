@@ -2,6 +2,8 @@ import mockup.MockDictionary;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -20,8 +22,8 @@ class PermutationTest {
         dictionary[1] = "BBB";
         dictionary[2] = "CCC";
         dictionary[3] = "ABC";
-        dictionary[4] = "BC";
-        dictionary[5] = "A";
+        dictionary[4] = "BCC";
+        dictionary[5] = "F";
 
     }
 
@@ -69,14 +71,14 @@ class PermutationTest {
 
     @Test
     void permutationMatchesWordButStillHaveMoreNumbsToEncode(){
-        permutation = new Permutation("A",0,"22",dictionary);
-        assertEquals("A-",permutation.getPermutation());
+        permutation = new Permutation("F",0,"22",dictionary);
+        assertEquals("F-",permutation.getPermutation());
     }
 
     @Test
     void contiunesToProcessPermutationsUntilWordFound(){
         permutation = new Permutation("C",0,"22",dictionary);
-        assertEquals("CCC",permutation.getFoundWord());
+        assertEquals("CCC",permutation.getFoundWords().get(0));
     }
 
     @Test
@@ -89,6 +91,17 @@ class PermutationTest {
     void ignoresWordsThatDoNotGiveFullEncoding(){
         permutation = new Permutation("BC",1,"4",dictionary);
         assertEquals(null,permutation.getFoundWord());
+    }
+
+    @Test
+    void returnMultiWordMatches(){
+        ArrayList<String> expectedResults = new ArrayList<>();
+        expectedResults.add("AAA");
+        expectedResults.add("BBB");
+        expectedResults.add("ABC");
+        expectedResults.add("CCC");
+        permutation = new Permutation("",-1,"222",dictionary);
+        assertEquals(expectedResults,permutation.getFoundWords());
     }
 
 }

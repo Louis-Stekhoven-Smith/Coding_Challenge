@@ -23,7 +23,6 @@ public class Encode {
         }
         intInput = Character.getNumericValue(charInput);
 
-        System.out.println(intInput);
         switch(intInput){
             case 2: code = "ABC";
                 return possibleKeys(code);
