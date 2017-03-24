@@ -12,18 +12,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class PermutationTest {
 
     private Permutation permutation;
-    private static String[] dictionary = new String[6];
+    private static String[] dictionary = new String[9];
     private String remainingInput = "2231";
     private int currentPosition = 0;
+    private ArrayList<String> emptyList = new ArrayList<>();
 
     @BeforeAll
     public static void setUp() {
+        ArrayList<String> emptyList = new ArrayList<>();
         dictionary[0] = "AAA";
         dictionary[1] = "BBB";
         dictionary[2] = "CCC";
         dictionary[3] = "ABC";
         dictionary[4] = "BCC";
         dictionary[5] = "F";
+        dictionary[6] = "DD";
+        dictionary[7] = "G";
+        dictionary[8] = "HH";
+
 
     }
 
@@ -70,9 +76,9 @@ class PermutationTest {
     }
 
     @Test
-    void permutationMatchesWordButStillHaveMoreNumbsToEncode(){
-        permutation = new Permutation("F",0,"22",dictionary);
-        assertEquals("F-",permutation.getPermutation());
+    void permutationAMultiWordMatchInput(){
+        permutation = new Permutation("G",0,"44",dictionary);
+        assertEquals("G-HH",permutation.getPermutation());
     }
 
     @Test
@@ -84,21 +90,22 @@ class PermutationTest {
     @Test
     void InputStringWithLength1(){
         permutation = new Permutation("B",0,null,dictionary);
-        assertEquals(null,permutation.getFoundWord());
+        assertEquals(emptyList,permutation.getFoundWords());
     }
 
     @Test
     void ignoresWordsThatDoNotGiveFullEncoding(){
-        permutation = new Permutation("BC",1,"4",dictionary);
-        assertEquals(null,permutation.getFoundWord());
+        permutation = new Permutation("D",0,"32",dictionary);
+        assertEquals(emptyList,permutation.getFoundWords());
     }
 
     @Test
     void returnMultiWordMatches(){
         ArrayList<String> expectedResults = new ArrayList<>();
         expectedResults.add("AAA");
-        expectedResults.add("BBB");
         expectedResults.add("ABC");
+        expectedResults.add("BBB");
+        expectedResults.add("BCC");
         expectedResults.add("CCC");
         permutation = new Permutation("",-1,"222",dictionary);
         assertEquals(expectedResults,permutation.getFoundWords());

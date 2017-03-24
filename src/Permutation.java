@@ -6,14 +6,12 @@ import java.util.List;
  */
 public class Permutation {
 
-    private String currentPermutation;
+    private String currentPermutation, remainingInput;
     private String[] subDictionary;
     private int currentPositionInString;
-    private String remainingInput;
     private Search search;
     private Boolean isAWord = false;
     private Encode encode = new Encode();
-    private String foundWord = null;
     private ArrayList<String> foundWords = new ArrayList<>();
     private static final int nextInputNumber = 0;
 
@@ -58,7 +56,7 @@ public class Permutation {
         }
         /**  Word matches and has more numbers to process in the string*/
         else if (permutationIsWord()) {
-            isAWord = true;
+
             this.currentPermutation += "-";
             /*TODO /**I need to spin up new permutaitons here */
         }
@@ -68,8 +66,7 @@ public class Permutation {
         }
     }
 
-    /** Spins up new permutation objects to start checking if the current permutation +1
-     * encoded number matches a word */
+    /** Spins up new permutation objects to start checking the next set of permutations */
     private void recursivePermutations() {
         char[] possibleKeys;
         String newRemainingInput;
@@ -78,7 +75,7 @@ public class Permutation {
         possibleKeys = encode.getPossibleKeys(remainingInput.charAt(nextInputNumber));
         newRemainingInput = setRemainingInput();
         currentPositionInString++;
-           /* System.out.println("Input " + remainingInput + " new string " + sb.toString());*/
+
         for(int i = 0; i < possibleKeys.length; i++){
             generateNewPermutation(possibleKeys[i], newRemainingInput);
         }
@@ -103,7 +100,7 @@ public class Permutation {
     /** Creates a new permutation object and checks if it is a word*/
     private void generateNewPermutation(char key, String newRemainingInput) {
         String newPermutation;
-        
+
         newPermutation = currentPermutation + key;
         Permutation nextPermutation = new Permutation(newPermutation, currentPositionInString, newRemainingInput,
                 subDictionary);
@@ -161,7 +158,6 @@ public class Permutation {
         return currentPermutation;
     }
     /** redudent */
-    public String getFoundWord(){
-        return foundWord;
-    }
+
+
 }
