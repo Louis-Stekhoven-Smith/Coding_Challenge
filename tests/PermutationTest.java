@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PermutationTest {
 
     private Permutation permutation;
-    private static String[] dictionary = new String[9];
+    private static String[] dictionary = new String[10];
     private String remainingInput = "2231";
     private int currentPosition = 0;
     private ArrayList<String> emptyList = new ArrayList<>();
@@ -29,19 +29,20 @@ class PermutationTest {
         dictionary[6] = "DD";
         dictionary[7] = "G";
         dictionary[8] = "HH";
+        dictionary[9] = "GGG";
 
 
     }
 
     @Test
     void permutationStillHasWordsThatPartialMatch() {
-        permutation = new Permutation("A", 0, remainingInput, dictionary);
+        permutation = new Permutation("A", 0, 0,remainingInput, dictionary);
         assertEquals(true, permutation.hasWordsMatching());
     }
 
     @Test
     void initialiseClass() {
-        permutation = new Permutation("A", currentPosition, null, dictionary);
+        permutation = new Permutation("A", currentPosition,0, null, dictionary);
         assertEquals( "A",permutation.getPermutation());
 
     }
@@ -50,52 +51,55 @@ class PermutationTest {
     void permutationDoesNotMatchWord() {
         remainingInput = null;
         int position = 2;
-        permutation = new Permutation("ABE", position, remainingInput, dictionary);
+        permutation = new Permutation("ABE", position,2, remainingInput, dictionary);
         assertEquals("ABE", permutation.getPermutation());
     }
 
     @Test
     void passInEmptyString() {
-        permutation = new Permutation(null, currentPosition, remainingInput, dictionary);
+        permutation = new Permutation(null, currentPosition, 0,remainingInput, dictionary);
         assertEquals(null, permutation.getPermutation());
     }
 
     @Test
     void permutationDoesNotHaveASubDictionary() {
         String[] emptyDic = new String[0];
-        permutation = new Permutation("CC", currentPosition, remainingInput, emptyDic);
+        permutation = new Permutation("CC", currentPosition, 0,remainingInput, emptyDic);
         assertEquals(false, permutation.hasWordsMatching());
     }
 
     @Test
     void permutationMatchesWord(){
         remainingInput = null;
-        permutation = new Permutation("ABC", 2, remainingInput, dictionary);
+        permutation = new Permutation("ABC", 2, 2, remainingInput, dictionary);
         assertEquals(true, permutation.isAWord());
         assertEquals("ABC",permutation.getPermutation());
     }
 
     @Test
-    void permutationAMultiWordMatchInput(){
-        permutation = new Permutation("G",0,"44",dictionary);
-        assertEquals("G-HH",permutation.getPermutation());
+    void AMultiWordMatchInput(){
+        emptyList.add("GGG");
+        emptyList.add("G-G-G");
+        emptyList.add("G-HH");
+        permutation = new Permutation("G",0,0,"44",dictionary);
+        assertEquals(emptyList,permutation.getFoundWords());
     }
 
     @Test
     void contiunesToProcessPermutationsUntilWordFound(){
-        permutation = new Permutation("C",0,"22",dictionary);
+        permutation = new Permutation("C",0,0,"22",dictionary);
         assertEquals("CCC",permutation.getFoundWords().get(0));
     }
 
     @Test
     void InputStringWithLength1(){
-        permutation = new Permutation("B",0,null,dictionary);
+        permutation = new Permutation("B",0,1,null,dictionary);
         assertEquals(emptyList,permutation.getFoundWords());
     }
 
     @Test
     void ignoresWordsThatDoNotGiveFullEncoding(){
-        permutation = new Permutation("D",0,"32",dictionary);
+        permutation = new Permutation("D",0,1,"32",dictionary);
         assertEquals(emptyList,permutation.getFoundWords());
     }
 
@@ -107,7 +111,7 @@ class PermutationTest {
         expectedResults.add("BBB");
         expectedResults.add("BCC");
         expectedResults.add("CCC");
-        permutation = new Permutation("",-1,"222",dictionary);
+        permutation = new Permutation("",-1,-1,"222",dictionary);
         assertEquals(expectedResults,permutation.getFoundWords());
     }
 

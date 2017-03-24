@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by louie on 22/03/2017.
@@ -7,15 +6,15 @@ import java.util.List;
 public class Permutation {
 
     private String currentPermutation, remainingInput;
-    private String[] subDictionary;
-    private int currentPositionInString;
+    private String[] subDictionary,fulldic;
+    private int currentPositionInInput, numberOfCharsProceeding;
     private Search search;
     private Boolean isAWord = false;
     private Encode encode = new Encode();
     private ArrayList<String> foundWords = new ArrayList<>();
     private static final int nextInputNumber = 0;
 
-    Permutation(String currentPermutation, int currentPositionInString, String remainingInput,
+    Permutation(String currentPermutation, int currentPositionInInput, int numberOfCharsProceeding, String remainingInput,
                 String[] dictionary) {
 
         if(currentPermutation == null){
@@ -23,10 +22,13 @@ public class Permutation {
         }else{
 
             this.currentPermutation = currentPermutation;
-            this.currentPositionInString = currentPositionInString;
+            this.currentPositionInInput = currentPositionInInput;
             this.remainingInput = remainingInput;
             this.search = new Search(dictionary);
             this.subDictionary = dictionary;
+            this.numberOfCharsProceeding = numberOfCharsProceeding;
+            /** temp for test make dic object */
+            this.fulldic = dictionary;
             generateNewSubDictionary();
 
             System.out.println(currentPermutation);
@@ -57,7 +59,16 @@ public class Permutation {
         /**  Word matches and has more numbers to process in the string*/
         else if (permutationIsWord()) {
 
-            this.currentPermutation += "-";
+            /** Ignore Match and keep searching for larger word matches */
+            recursivePermutations();
+
+
+            /**Search for multi word match */
+            currentPermutation += "-";
+            numberOfCharsProceeding = -1;
+            subDictionary = fulldic;
+
+            recursivePermutations();
             /*TODO /**I need to spin up new permutaitons here */
         }
         /** keep searching */
@@ -73,8 +84,9 @@ public class Permutation {
 
         /**Get encodings for the next number, and update*/
         possibleKeys = encode.getPossibleKeys(remainingInput.charAt(nextInputNumber));
-        newRemainingInput = setRemainingInput();
-        currentPositionInString++;
+        newRemainingInput = updateRemainingInput();
+        currentPositionInInput++;
+        numberOfCharsProceeding++;
 
         for(int i = 0; i < possibleKeys.length; i++){
             generateNewPermutation(possibleKeys[i], newRemainingInput);
@@ -82,46 +94,56 @@ public class Permutation {
     }
 
     /** Removes the leading char in the input string */
-    private String setRemainingInput() {
+    private String updateRemainingInput() {
         String newRemainingInput;
-        StringBuilder sb;
+        StringBuilder updatedInput;
 
-        sb = new StringBuilder((remainingInput));
-        sb.deleteCharAt(0);
-        /** No more char left to encode  */
-        if (sb.length() == 0) {
+        updatedInput = new StringBuilder((remainingInput));
+        updatedInput.deleteCharAt(0);
+        if (updatedInput.length() == 0) {
             newRemainingInput = null;
         } else {
-            newRemainingInput = sb.toString();
+            newRemainingInput = updatedInput.toString();
         }
         return newRemainingInput;
     }
 
     /** Creates a new permutation object and checks if it is a word*/
+
+    /*TODO I need too have this create clean permutations or ones with a dash */
     private void generateNewPermutation(char key, String newRemainingInput) {
         String newPermutation;
 
         newPermutation = currentPermutation + key;
-        Permutation nextPermutation = new Permutation(newPermutation, currentPositionInString, newRemainingInput,
+        Permutation nextPermutation = new Permutation(newPermutation, currentPositionInInput, numberOfCharsProceeding, newRemainingInput,
                 subDictionary);
 
         /*TODO - I need to store the output in an arrayList so I can keep all variations avaliable */
         /** Feeding the word back out of the recursive stack*/
         if (nextPermutation.isAWord) {
-
-            foundWords.addAll(nextPermutation.getFoundWords());
-            System.out.println("Assing to ArrayList "+foundWords);
-            isAWord = true;
+                foundWords.addAll(nextPermutation.getFoundWords());
+                System.out.println("Assing to ArrayList "+foundWords);
+                isAWord = true;
         }
     }
 
-    /** Check if permutation is a word */
+    /** Check if permutation is a word
+     * if this is a multi word search e.g 'CALL-ME' then only
+     * searchs if 'ME' is a word*/
     private Boolean permutationIsWord(){
+        String[] subString;
+        String lastToken;
+
         if(currentPermutation == null){
             return false;
         }
+
+        subString = currentPermutation.split("-");
+        lastToken = subString[subString.length -1];
+        System.out.println(lastToken);
+
         for (int i = 0; i < subDictionary.length; i++){
-            if(currentPermutation.equals(subDictionary[i])){
+            if(lastToken.equals(subDictionary[i])){
                 return true;
             }
         }
@@ -135,8 +157,8 @@ public class Permutation {
             /** do nothing */
         }
         else{
-            currentChar = currentPermutation.charAt(currentPositionInString);
-            subDictionary = search.getWordsThatMatch(currentChar, currentPositionInString);
+            currentChar = currentPermutation.charAt(currentPositionInInput);
+            subDictionary = search.getWordsThatMatch(currentChar, numberOfCharsProceeding);
             search = new Search(subDictionary);
         }
     }
