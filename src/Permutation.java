@@ -69,7 +69,6 @@ public class Permutation {
             subDictionary = fulldic;
 
             recursivePermutations();
-            /*TODO /**I need to spin up new permutaitons here */
         }
         /** keep searching */
         else{
