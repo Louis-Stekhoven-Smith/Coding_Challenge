@@ -18,22 +18,11 @@ public class Permutation {
                 String[] dictionary) {
 
         if(currentPermutation == null){
-            System.out.print("Null entered as current Permutation - Stopped Search");
+            System.out.print("No input given - Stopped Search");
         }else{
-
-            this.currentPermutation = currentPermutation;
-            this.currentPositionInInput = currentPositionInInput;
-            this.remainingInput = remainingInput;
-            this.search = new Search(dictionary);
-            this.subDictionary = dictionary;
-            this.numberOfCharsProceeding = numberOfCharsProceeding;
-            /** temp for test make dic object */
-
+            updateData(currentPermutation, currentPositionInInput, numberOfCharsProceeding, remainingInput, dictionary);
             generateNewSubDictionary();
-
-            System.out.println(currentPermutation);
-
-            /** No words match permutation stop  */
+           /* System.out.println(currentPermutation);*/
             if(!hasWordsMatching()){
                 /** Do nothing */
             }
@@ -41,6 +30,15 @@ public class Permutation {
                 continueSearch();
             }
         }
+    }
+
+    private void updateData(String currentPermutation, int currentPositionInInput, int numberOfCharsProceeding, String remainingInput, String[] dictionary) {
+        this.currentPermutation = currentPermutation;
+        this.currentPositionInInput = currentPositionInInput;
+        this.remainingInput = remainingInput;
+        this.search = new Search(dictionary);
+        this.subDictionary = dictionary;
+        this.numberOfCharsProceeding = numberOfCharsProceeding;
     }
 
     /** Helpers */
@@ -51,16 +49,11 @@ public class Permutation {
     private void continueSearch() {
 
         if (permutationIsWord() && remainingInput == null) {
-            /*System.out.println("This is a test " +currentPermutation);*/
-            isAWord = true;
-            foundWords.add(currentPermutation);
-            System.out.println("Is a word "+currentPermutation);
+            addPermutationToMatches();
         }else if (remainingInput == null){
             /** Do nothing */
         }
-        /**  Word matches and has more numbers to process in the string*/
         else if (permutationIsWord()) {
-
             /** First ignore match and keep searching for larger words */
             recursivePermutations();
 
@@ -72,6 +65,12 @@ public class Permutation {
         else{
             recursivePermutations();
         }
+    }
+
+    private void addPermutationToMatches() {
+        isAWord = true;
+        foundWords.add(currentPermutation);
+        System.out.println("Is a word "+currentPermutation);
     }
 
     /** Spins up new permutation objects to start checking the next set of permutations */
@@ -170,8 +169,11 @@ public class Permutation {
     private void loadDefaultDictionary() {
         System.out.println("Dictionary has not been loaded.");
         System.out.println("Attempting to load default.");
-        Dictionary.load(null);
-        subDictionary = Dictionary.getDictionary();
+        if(Dictionary.load(null)){
+            System.out.println("Failed to load default");
+        }else{
+            subDictionary = Dictionary.getDictionary();
+        }
     }
 
     /** Getters */

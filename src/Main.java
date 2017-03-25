@@ -11,15 +11,19 @@ public class Main {
 
         String input;
 
-        String[] dictionary = new String[9];
+        String[] dictionary = new String[12];
         dictionary[0] = "AAA";
         dictionary[1] = "BBB";
         dictionary[2] = "CCC";
         dictionary[3] = "ABC";
-        dictionary[4] = "B";
-        dictionary[5] = "A";
-        dictionary[7] ="CALL";
-        dictionary[8] ="ME";
+        dictionary[3] = "BCC";
+        dictionary[4] = "F";
+        dictionary[5] = "DD";
+        dictionary[6] = "G";
+        dictionary[7] = "HH";
+        dictionary[8] = "GGG";
+        dictionary[9] ="CALL";
+        dictionary[10] ="ME";
         Search search = new Search(dictionary);
 
 
