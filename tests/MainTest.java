@@ -8,6 +8,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainTest {
 
 
+    @Test
+    void useDefaultDictionary(){
+        
+    }
 
+    @Test
+    void inputStringForPatternMatch(){
+
+    }
+
+    @Test
+    void selectFileInputForPatternMatch(){
+
+    }
+
+    @Test
+    void addWordToDictionary(){
+
+    }
 
 }

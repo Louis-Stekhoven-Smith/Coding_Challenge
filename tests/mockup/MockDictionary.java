@@ -9,7 +9,7 @@ public class MockDictionary {
 
 
     public MockDictionary() {
-        dictionary = new String[10];
+        dictionary = new String[12];
         dictionary[0] = "AAA";
         dictionary[1] = "BBB";
         dictionary[2] = "CCC";
@@ -20,7 +20,8 @@ public class MockDictionary {
         dictionary[7] = "G";
         dictionary[8] = "HH";
         dictionary[9] = "GGG";
-
+        dictionary[10] = "CALL";
+        dictionary[11] = "ME";
     }
     public static String[] getDictionary(){
             return dictionary;

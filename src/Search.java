@@ -34,7 +34,7 @@ public class Search {
                 }
             }
             catch(Exception e){
-                    System.out.println("getWordsThatMatch " + e.getMessage());
+                   /* System.out.println("getWordsThatMatch " + e.getMessage());*/
                 }
         }
         if (noWordsFound(matchedWords)) {

@@ -15,6 +15,7 @@ class DictionaryTest {
 
     @Test
     void getDictionaryDefault(){
+
         dictionary.load(null);
         assertArrayEquals(mockDictionary.getDictionary(),dictionary.getDictionary());
     }

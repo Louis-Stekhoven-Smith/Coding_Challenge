@@ -169,7 +169,7 @@ public class Permutation {
     private void loadDefaultDictionary() {
         System.out.println("Dictionary has not been loaded.");
         System.out.println("Attempting to load default.");
-        if(Dictionary.load(null)){
+        if(!Dictionary.load(null)){
             System.out.println("Failed to load default");
         }else{
             subDictionary = Dictionary.getDictionary();
