@@ -6,43 +6,52 @@ import java.io.File;
  */
 public class Dictionary {
 
-    private String defaultFilePath = "Dictionary.txt";
-    private String[] theDictionary;
+    private static String defaultFilePath = "Dictionary.txt";
+    private static String[] theDictionary;
 
-    public Boolean load(String pathFile){
-        Scanner scanner;
+    /** Loads file into array */
+    public static Boolean load(String filePath){
 
         /**load default;*/
-        if(pathFile == null) {
-            ArrayList<String> buildingDictionary = new ArrayList<>();
-            try {
-              scanner = new Scanner(new File(defaultFilePath));
+        if(filePath == null) {
+            filePath = defaultFilePath;
+        }
+        if(readInFile(filePath)){
+            return true;
 
-                while(scanner.hasNext()){
-                    String sanitizedInput = scanner.nextLine().replaceAll("[^a-zA-Z]","").toUpperCase();
-                    buildingDictionary.add(sanitizedInput);
-                }
-                scanner.close();
+        }
+        return false;
+    }
 
-                if(buildingDictionary.isEmpty()){
-                    System.out.println("File provided does not contain any words: "+ defaultFilePath);
-                    return false;
-                }
-                theDictionary = buildingDictionary.toArray(new String[buildingDictionary.size()]);
-                return true;
+    /** Attempts to read in a file from the given fil path*/
+    private static Boolean readInFile(String filePath) {
+        Scanner scanner;
+        ArrayList<String> buildingDictionary = new ArrayList<>();
 
-            }catch(Exception e){
-                System.out.println(e.getMessage());
+        try {
+          scanner = new Scanner(new File(filePath));
+
+            while(scanner.hasNext()){
+                String sanitizedInput = scanner.nextLine().replaceAll("[^a-zA-Z]","").toUpperCase();
+                buildingDictionary.add(sanitizedInput);
+            }
+            scanner.close();
+
+            if(buildingDictionary.isEmpty()){
+                System.out.println("File provided does not contain any words: "+ filePath);
                 return false;
             }
+            theDictionary = buildingDictionary.toArray(new String[buildingDictionary.size()]);
+            return true;
 
-        }else{
-            /**load give*/
+        }catch(Exception e){
+            System.out.println(e.getMessage());
             return false;
         }
     }
 
-    public String[] getDictionary(){
+    /** Getters */
+    public static String[] getDictionary(){
         return theDictionary;
     }
 

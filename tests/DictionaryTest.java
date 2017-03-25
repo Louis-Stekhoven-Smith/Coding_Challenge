@@ -30,18 +30,21 @@ class DictionaryTest {
     }
 
     @Test
-    void removesWhiteSpace(){
+    void sanitizedDictionary() {
+        ArrayList<String> expectedResults = new ArrayList<>();
+        expectedResults.add("ABC");
+        dictionary.load("DirtyInput.txt");
+        assertArrayEquals(mockDictionary.getDictionary(), dictionary.getDictionary());
 
-    }
-
-    @Test
-    void removesPuntioation(){
-
+        Permutation permutation = new Permutation("ABC", 2, 2,
+                null, dictionary.getDictionary());
+        assertEquals(expectedResults, permutation.getFoundWords());
     }
 
     @Test
     void fileLoadedEmpty(){
-
+        dictionary.load("Empty.txt");
+        assertEquals(false,dictionary.load("Empty.txt"));
     }
 
 

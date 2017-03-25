@@ -13,23 +13,16 @@ class PermutationTest {
 
     private Permutation permutation;
     private static String[] dictionary = new String[10];
-    private String remainingInput = "2231";
+    private String remainingInput = "22";
     private int currentPosition = 0;
     private ArrayList<String> emptyList = new ArrayList<>();
+    private static MockDictionary mockDictionary = new MockDictionary();
 
     @BeforeAll
     public static void setUp() {
         ArrayList<String> emptyList = new ArrayList<>();
-        dictionary[0] = "AAA";
-        dictionary[1] = "BBB";
-        dictionary[2] = "CCC";
-        dictionary[3] = "ABC";
-        dictionary[4] = "BCC";
-        dictionary[5] = "F";
-        dictionary[6] = "DD";
-        dictionary[7] = "G";
-        dictionary[8] = "HH";
-        dictionary[9] = "GGG";
+        dictionary = mockDictionary.getDictionary();
+
 
 
     }

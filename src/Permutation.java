@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Permutation {
 
     private String currentPermutation, remainingInput;
-    private String[] subDictionary,fulldic;
+    private String[] subDictionary;
     private int currentPositionInInput, numberOfCharsProceeding;
     private Search search;
     private Boolean isAWord = false;
@@ -28,7 +28,7 @@ public class Permutation {
             this.subDictionary = dictionary;
             this.numberOfCharsProceeding = numberOfCharsProceeding;
             /** temp for test make dic object */
-            this.fulldic = dictionary;
+
             generateNewSubDictionary();
 
             System.out.println(currentPermutation);
@@ -44,10 +44,12 @@ public class Permutation {
     }
 
     /** Helpers */
+
     /** Checks if current permutation is a one to one match with string e.g. 2255 = CALL
      * If it is a one to one match or there is no input left to parse then stop search
      * Otherwise continue recursive search*/
     private void continueSearch() {
+
         if (permutationIsWord() && remainingInput == null) {
             /*System.out.println("This is a test " +currentPermutation);*/
             isAWord = true;
@@ -59,15 +61,11 @@ public class Permutation {
         /**  Word matches and has more numbers to process in the string*/
         else if (permutationIsWord()) {
 
-            /** Ignore Match and keep searching for larger word matches */
+            /** First ignore match and keep searching for larger words */
             recursivePermutations();
 
-
-            /**Search for multi word match */
-            currentPermutation += "-";
-            numberOfCharsProceeding = -1;
-            subDictionary = fulldic;
-
+            /**Now search for multi word match */
+            resetSearchParameters();
             recursivePermutations();
         }
         /** keep searching */
@@ -107,9 +105,7 @@ public class Permutation {
         return newRemainingInput;
     }
 
-    /** Creates a new permutation object and checks if it is a word*/
-
-    /*TODO I need too have this create clean permutations or ones with a dash */
+    /** Creates a new permutation of length currentPermutation+1 and checks if it is a word*/
     private void generateNewPermutation(char key, String newRemainingInput) {
         String newPermutation;
 
@@ -117,18 +113,17 @@ public class Permutation {
         Permutation nextPermutation = new Permutation(newPermutation, currentPositionInInput, numberOfCharsProceeding, newRemainingInput,
                 subDictionary);
 
-        /*TODO - I need to store the output in an arrayList so I can keep all variations avaliable */
         /** Feeding the word back out of the recursive stack*/
         if (nextPermutation.isAWord) {
                 foundWords.addAll(nextPermutation.getFoundWords());
-                System.out.println("Assing to ArrayList "+foundWords);
+                System.out.println("Adding to found words "+foundWords);
                 isAWord = true;
         }
     }
 
     /** Check if permutation is a word
-     * if this is a multi word search e.g 'CALL-ME' then only
-     * searchs if 'ME' is a word*/
+     * If this is a multi word search e.g 'CALL-ME' then only
+     * searches checks if 'ME' is a word*/
     private Boolean permutationIsWord(){
         String[] subString;
         String lastToken;
@@ -136,10 +131,8 @@ public class Permutation {
         if(currentPermutation == null){
             return false;
         }
-
         subString = currentPermutation.split("-");
         lastToken = subString[subString.length -1];
-        System.out.println(lastToken);
 
         for (int i = 0; i < subDictionary.length; i++){
             if(lastToken.equals(subDictionary[i])){
@@ -162,6 +155,25 @@ public class Permutation {
         }
     }
 
+    /** resets parameters to start searching for a new word */
+    private void resetSearchParameters() {
+        currentPermutation += "-";
+        numberOfCharsProceeding = -1;
+
+        /** Reset Dictionary to include all words */
+        subDictionary = Dictionary.getDictionary();
+
+        if(subDictionary == null){
+            loadDefaultDictionary();
+        }
+    }
+    private void loadDefaultDictionary() {
+        System.out.println("Dictionary has not been loaded.");
+        System.out.println("Attempting to load default.");
+        Dictionary.load(null);
+        subDictionary = Dictionary.getDictionary();
+    }
+
     /** Getters */
     public Boolean hasWordsMatching(){
         if(subDictionary == null){
@@ -175,10 +187,10 @@ public class Permutation {
     public Boolean isAWord(){
         return isAWord;
     }
+
     public String getPermutation(){
         return currentPermutation;
     }
-    /** redudent */
 
 
 }

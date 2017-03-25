@@ -5,18 +5,24 @@ package mockup;
  */
 public class MockDictionary {
 
-    private String[] dictionary;
+    private static String[] dictionary;
 
 
-    public String[] getDictionary() {
-        String[] dictionary = new String[6];
+    public MockDictionary() {
+        dictionary = new String[10];
         dictionary[0] = "AAA";
         dictionary[1] = "BBB";
         dictionary[2] = "CCC";
         dictionary[3] = "ABC";
-        dictionary[4] = "B";
-        dictionary[5] = "A";
+        dictionary[4] = "BCC";
+        dictionary[5] = "F";
+        dictionary[6] = "DD";
+        dictionary[7] = "G";
+        dictionary[8] = "HH";
+        dictionary[9] = "GGG";
 
-        return dictionary;
+    }
+    public static String[] getDictionary(){
+            return dictionary;
     }
 }
