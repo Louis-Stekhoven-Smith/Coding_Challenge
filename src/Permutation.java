@@ -1,28 +1,33 @@
-import java.util.ArrayList;
-
-/**
+/**Permutation Class
+ *This class generates each permutation the input number can
+ * be encoded too. It recursively calls its self to add an extra
+ * digit to the permutation at a time. If no words are found to be matching
+ * the permutation the recursive call breaks out.
  * Created by louie on 22/03/2017.
  */
+import java.util.ArrayList;
 public class Permutation {
 
     private String currentPermutation, remainingInput;
     private String[] subDictionary;
-    private int currentPositionInInput, numberOfCharsProceeding;
+    private int numberOfCharsProceeding;
     private Search search;
     private Boolean isAWord = false;
     private Encode encode = new Encode();
     private ArrayList<String> foundWords = new ArrayList<>();
     private static final int nextInputNumber = 0;
+    private char currentDigit;
 
-    Permutation(String currentPermutation, int currentPositionInInput, int numberOfCharsProceeding, String remainingInput,
+
+    Permutation(String currentPermutation, int numberOfCharsProceeding, String remainingInput,
                 String[] dictionary) {
 
         if(currentPermutation == null){
-            System.out.print("No input given - Stopped Search");
+            System.out.println("No input given - Stopped Search");
         }else{
-            updateData(currentPermutation, currentPositionInInput, numberOfCharsProceeding, remainingInput, dictionary);
+            updateData(currentPermutation, numberOfCharsProceeding, remainingInput, dictionary);
             generateNewSubDictionary();
-           /* System.out.println(currentPermutation);*/
+
             if(!hasWordsMatching()){
                 /** Do nothing */
             }
@@ -32,9 +37,10 @@ public class Permutation {
         }
     }
 
-    private void updateData(String currentPermutation, int currentPositionInInput, int numberOfCharsProceeding, String remainingInput, String[] dictionary) {
+    /** Update objects private vars */
+    private void updateData(String currentPermutation, int numberOfCharsProceeding,
+                            String remainingInput, String[] dictionary) {
         this.currentPermutation = currentPermutation;
-        this.currentPositionInInput = currentPositionInInput;
         this.remainingInput = remainingInput;
         this.search = new Search(dictionary);
         this.subDictionary = dictionary;
@@ -48,29 +54,27 @@ public class Permutation {
      * Otherwise continue recursive search*/
     private void continueSearch() {
 
-        if (permutationIsWord() && remainingInput == null) {
+        if ((permutationIsWord())&& remainingInput == null) {
             addPermutationToMatches();
         }else if (remainingInput == null){
             /** Do nothing */
         }
         else if (permutationIsWord()) {
-            /** First ignore match and keep searching for larger words */
+            /** Ignore match and keep searching for larger words */
             recursivePermutations();
 
-            /**Now search for multi word match */
+            /** Search for multi word match */
             resetSearchParameters();
+            currentPermutation += "-";
             recursivePermutations();
+
+            addDigitAfterWordSearchAgain();
         }
-        /** keep searching */
+        /** Keep searching */
         else{
             recursivePermutations();
+            addLeadingDigitAndSearchAgain();
         }
-    }
-
-    private void addPermutationToMatches() {
-        isAWord = true;
-        foundWords.add(currentPermutation);
-        System.out.println("Is a word "+currentPermutation);
     }
 
     /** Spins up new permutation objects to start checking the next set of permutations */
@@ -79,14 +83,67 @@ public class Permutation {
         String newRemainingInput;
 
         /**Get encodings for the next number, and update*/
-        possibleKeys = encode.getPossibleKeys(remainingInput.charAt(nextInputNumber));
-        newRemainingInput = updateRemainingInput();
-        currentPositionInInput++;
-        numberOfCharsProceeding++;
+        currentDigit = remainingInput.charAt(nextInputNumber);
+        possibleKeys = encode.getPossibleKeys(currentDigit);
 
-        for(int i = 0; i < possibleKeys.length; i++){
-            generateNewPermutation(possibleKeys[i], newRemainingInput);
+        if(possibleKeys != null) {
+            newRemainingInput = updateRemainingInput();
+            numberOfCharsProceeding++;
+
+            for (int i = 0; i < possibleKeys.length; i++) {
+                generateNewPermutation(possibleKeys[i], newRemainingInput);
+            }
         }
+    }
+
+    /** Creates a new permutation of length currentPermutation+1 and checks if it is a word*/
+    private void generateNewPermutation(char key, String newRemainingInput) {
+        String newPermutation;
+
+        newPermutation = currentPermutation + key;
+        Permutation nextPermutation = new Permutation(newPermutation, numberOfCharsProceeding, newRemainingInput,
+                subDictionary);
+
+        /** Feeding the word back out of the recursive stack*/
+        if (nextPermutation.isAWord) {
+            foundWords.addAll(nextPermutation.getFoundWords());
+            isAWord = true;
+        }
+    }
+
+    /** Allows for a digit at the start of the number */
+    private void addLeadingDigitAndSearchAgain() {
+        remainingInput = updateRemainingInput();
+        if(remainingInput == null) {
+            /* Do nothing only one digit was given */
+        }else {
+            if (currentPermutation == "") {
+                currentPermutation += currentDigit + "-";
+                resetSearchParameters();
+                recursivePermutations();
+            }
+        }
+    }
+
+    /** Allows for a digit to be between words */
+    private void addDigitAfterWordSearchAgain() {
+        remainingInput = updateRemainingInput();
+        if(remainingInput == null){
+            currentPermutation += currentDigit;
+            isAWord = true;
+            addPermutationToMatches();
+        }else {
+
+            resetSearchParameters();
+            currentPermutation += currentDigit + "-";
+            recursivePermutations();
+        }
+    }
+
+    /** Adds the current permutation to the lists of matched words. */
+    private void addPermutationToMatches() {
+        isAWord = true;
+        foundWords.add(currentPermutation);
     }
 
     /** Removes the leading char in the input string */
@@ -102,22 +159,6 @@ public class Permutation {
             newRemainingInput = updatedInput.toString();
         }
         return newRemainingInput;
-    }
-
-    /** Creates a new permutation of length currentPermutation+1 and checks if it is a word*/
-    private void generateNewPermutation(char key, String newRemainingInput) {
-        String newPermutation;
-
-        newPermutation = currentPermutation + key;
-        Permutation nextPermutation = new Permutation(newPermutation, currentPositionInInput, numberOfCharsProceeding, newRemainingInput,
-                subDictionary);
-
-        /** Feeding the word back out of the recursive stack*/
-        if (nextPermutation.isAWord) {
-                foundWords.addAll(nextPermutation.getFoundWords());
-                System.out.println("Adding to found words "+foundWords);
-                isAWord = true;
-        }
     }
 
     /** Check if permutation is a word
@@ -148,15 +189,14 @@ public class Permutation {
             /** do nothing */
         }
         else{
-            currentChar = currentPermutation.charAt(currentPositionInInput);
+            currentChar = currentPermutation.charAt(currentPermutation.length() -1);
             subDictionary = search.getWordsThatMatch(currentChar, numberOfCharsProceeding);
             search = new Search(subDictionary);
         }
     }
 
-    /** resets parameters to start searching for a new word */
+    /** Resets parameters to start searching for a new word */
     private void resetSearchParameters() {
-        currentPermutation += "-";
         numberOfCharsProceeding = -1;
 
         /** Reset Dictionary to include all words */
@@ -166,10 +206,12 @@ public class Permutation {
             loadDefaultDictionary();
         }
     }
+
+    /**In case a search is started before a dictionary has been loaded.*/
     private void loadDefaultDictionary() {
         System.out.println("Dictionary has not been loaded.");
         System.out.println("Attempting to load default.");
-        if(!Dictionary.load(null)){
+        if(!Dictionary.load("Dictionary.txt")){
             System.out.println("Failed to load default");
         }else{
             subDictionary = Dictionary.getDictionary();

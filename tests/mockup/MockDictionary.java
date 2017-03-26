@@ -1,5 +1,7 @@
 package mockup;
 
+import java.util.Dictionary;
+
 /**
  * Created by louie on 19/03/2017.
  */
@@ -26,4 +28,5 @@ public class MockDictionary {
     public static String[] getDictionary(){
             return dictionary;
     }
+
 }

@@ -16,13 +16,13 @@ class DictionaryTest {
     @Test
     void getDictionaryDefault(){
 
-        dictionary.load(null);
-        assertArrayEquals(mockDictionary.getDictionary(),dictionary.getDictionary());
+        dictionary.load("dictionary.txt");
+        assertEquals(true,dictionary.load("dictionary.txt"));
     }
 
     @Test
     void loadDictionarySuccess(){
-        assertEquals(true,dictionary.load(null));
+        assertEquals(true,dictionary.load("Dictionary.txt"));
     }
 
     @Test
@@ -37,7 +37,7 @@ class DictionaryTest {
         dictionary.load("DirtyInput.txt");
         assertArrayEquals(mockDictionary.getDictionary(), dictionary.getDictionary());
 
-        Permutation permutation = new Permutation("ABC", 2, 2,
+        Permutation permutation = new Permutation("ABC", 2,
                 null, dictionary.getDictionary());
         assertEquals(expectedResults, permutation.getFoundWords());
     }

@@ -1,5 +1,5 @@
-
-/**
+/**Encode class
+ * This class reads in a numeric number and encodes it
  * Created by louie on 19/03/2017.
  */
 public class Encode {
@@ -11,7 +11,7 @@ public class Encode {
 
     }
 
-    /** returns the charaters that match the input */
+    /**Returns the charaters that match the input */
     public static char[] getPossibleKeys(char charInput){
 
         int intInput;
@@ -49,7 +49,6 @@ public class Encode {
                 return possibleKeys(code);
 
             default:
-                System.out.println("no encoding found for input char " + charInput);
                 return null;
         }
 
