@@ -29,7 +29,6 @@ public class Permutation {
             generateNewSubDictionary();
 
             if(!hasWordsMatching()){
-                /** Do nothing */
             }
             else {
                 continueSearch();
@@ -47,9 +46,8 @@ public class Permutation {
         this.numberOfCharsProceeding = numberOfCharsProceeding;
     }
 
-    /** Helpers */
-
-    /** Checks if current permutation is a one to one match with string e.g. 2255 = CALL
+    /** Helpers
+     /** Checks if current permutation is a one to one match with string e.g. 2255 = CALL
      * If it is a one to one match or there is no input left to parse then stop search
      * Otherwise continue recursive search*/
     private void continueSearch() {
@@ -57,9 +55,9 @@ public class Permutation {
         if ((permutationIsWord())&& remainingInput == null) {
             addPermutationToMatches();
         }else if (remainingInput == null){
-            /** Do nothing */
         }
         else if (permutationIsWord()) {
+
             /** Ignore match and keep searching for larger words */
             recursivePermutations();
 
@@ -84,7 +82,7 @@ public class Permutation {
 
         /**Get encodings for the next number, and update*/
         currentDigit = remainingInput.charAt(nextInputNumber);
-        possibleKeys = encode.getPossibleKeys(currentDigit);
+        possibleKeys = Encode.getPossibleKeys(currentDigit);
 
         if(possibleKeys != null) {
             newRemainingInput = updateRemainingInput();
@@ -117,7 +115,7 @@ public class Permutation {
         if(remainingInput == null) {
             /* Do nothing only one digit was given */
         }else {
-            if (currentPermutation == "") {
+            if (currentPermutation.equals("")) {
                 currentPermutation += currentDigit + "-";
                 resetSearchParameters();
                 recursivePermutations();
@@ -185,7 +183,7 @@ public class Permutation {
     /** Narrow down the dictionary so that it only contains words that can  potentially match */
     private void generateNewSubDictionary(){
         char currentChar;
-        if(currentPermutation == ""){
+        if(currentPermutation.equals("")){
             /** do nothing */
         }
         else{

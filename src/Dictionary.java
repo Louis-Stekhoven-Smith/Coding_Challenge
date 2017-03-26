@@ -15,11 +15,7 @@ public class Dictionary {
     /** Loads file into array */
     public static Boolean load(String filePath){
 
-        if(readInFile(filePath)){
-            return true;
-
-        }
-        return false;
+        return (readInFile(filePath));
     }
 
     /** Attempts to read in a file from the given fil path*/
@@ -29,7 +25,7 @@ public class Dictionary {
         ArrayList<String> buildingDictionary = new ArrayList<>();
 
         try {
-          scanner = new Scanner(new File(filePath));
+            scanner = new Scanner(new File(filePath));
 
             while(scanner.hasNext()){
                 sanitizedInput = scanner.nextLine().replaceAll("[^a-zA-Z]","").toUpperCase();

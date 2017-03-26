@@ -1,8 +1,12 @@
-import java.util.ArrayList;
-
-/**
+/**Search Class
+ * Reduces input dictionary and reruns a new subDictionary that can be used to
+ * narrow down searching for full word matches
+ * Also used to find a 100% match with a word.
+ *
  * Created by louie on 18/03/2017.
  */
+import java.util.ArrayList;
+
 public class Search {
 
     private String[] dictionary;
@@ -34,8 +38,7 @@ public class Search {
                 }
             }
             catch(Exception e){
-                   /* System.out.println("getWordsThatMatch " + e.getMessage());*/
-                }
+            }
         }
         if (noWordsFound(matchedWords)) {
             return null;
