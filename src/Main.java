@@ -51,15 +51,6 @@ public class Main {
                     scanner.close();
                     break;
                 }
-                try {
-                    if (operatingSystem.contains("Windows")) {
-                        Runtime.getRuntime().exec("cls");
-                    } else {
-                        Runtime.getRuntime().exec("clear");
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
             }
         }
 
