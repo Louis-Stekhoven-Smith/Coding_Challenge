@@ -17,17 +17,17 @@ class DictionaryTest {
     void getDictionaryDefault(){
 
         dictionary.load("dictionary.txt");
-        assertEquals(true,dictionary.load("dictionary.txt"));
+        assertTrue(dictionary.load("dictionary.txt"));
     }
 
     @Test
     void loadDictionarySuccess(){
-        assertEquals(true,dictionary.load("Dictionary.txt"));
+        assertTrue(dictionary.load("Dictionary.txt"));
     }
 
     @Test
     void loadDictionarayFail(){
-        assertEquals(false,dictionary.load("badURL.txt"));
+        assertFalse(dictionary.load("badURL.txt"));
     }
 
     @Test
@@ -45,7 +45,7 @@ class DictionaryTest {
     @Test
     void fileLoadedEmpty(){
         dictionary.load("Empty.txt");
-        assertEquals(false,dictionary.load("Empty.txt"));
+        assertFalse(dictionary.load("Empty.txt"));
     }
 
 

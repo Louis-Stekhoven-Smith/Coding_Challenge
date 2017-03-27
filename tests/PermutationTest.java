@@ -14,7 +14,6 @@ class PermutationTest {
     private Permutation permutation;
     private static String[] dictionary = new String[10];
     private String remainingInput = "22";
-    private int currentPosition = 0;
     private ArrayList<String> emptyList = new ArrayList<>();
     private static MockDictionary mockDictionary = new MockDictionary();
 
@@ -22,16 +21,14 @@ class PermutationTest {
     public static void setUp() {
         ArrayList<String> emptyList = new ArrayList<>();
         dictionary = mockDictionary.getDictionary();
-
-
-
+        Dictionary.load("Dictionary.txt");
     }
 
     @Test
     void permutationStillHasWordsThatPartialMatch() {
         permutation = new Permutation("A",
                 0,remainingInput, dictionary);
-        assertEquals(true, permutation.hasWordsMatching());
+        assertTrue(permutation.hasWordsMatching());
     }
 
     @Test
@@ -39,7 +36,6 @@ class PermutationTest {
         permutation = new Permutation("A", 0,
         null, dictionary);
         assertEquals( "A",permutation.getPermutation());
-
     }
 
     @Test
@@ -48,14 +44,14 @@ class PermutationTest {
         int position = 2;
         permutation = new Permutation("ABE", 2,
                 remainingInput, dictionary);
-        assertEquals("ABE", permutation.getPermutation());
+        assertFalse(permutation.isAWord());
     }
 
     @Test
     void passInEmptyString() {
         permutation = new Permutation(null,
                 0,remainingInput, dictionary);
-        assertEquals(null, permutation.getPermutation());
+        assertNull( permutation.getPermutation());
     }
 
     @Test
@@ -63,7 +59,7 @@ class PermutationTest {
         String[] emptyDic = new String[0];
         permutation = new Permutation("CC", 0,
                 remainingInput, emptyDic);
-        assertEquals(false, permutation.hasWordsMatching());
+        assertFalse(permutation.hasWordsMatching());
     }
 
     @Test
@@ -71,17 +67,15 @@ class PermutationTest {
         remainingInput = null;
         permutation = new Permutation("ABC", 2,
                 remainingInput, dictionary);
-        assertEquals(true, permutation.isAWord());
-        assertEquals("ABC",permutation.getPermutation());
+        assertTrue(permutation.isAWord());
     }
 
     @Test
     void AMultiWordMatchInput(){
         emptyList.add("GGG");
-        emptyList.add("G-G-G");
-        emptyList.add("G-G-4");
-        emptyList.add("G-HH");
-        emptyList.add("G-4-G");
+        emptyList.add("G-I-I");
+        emptyList.add("G-I-4");
+        emptyList.add("G-4-I");
         permutation = new Permutation("G", 0,
                 "44",dictionary);
         assertEquals(emptyList,permutation.getFoundWords());
@@ -122,15 +116,4 @@ class PermutationTest {
     }
 
 }
-
-    /*TODO add a check if current permutation does not match a word*/
-
-
-    /*TODO*/
-    /** if permutation has a subdic then move to next postion in string and create new permutations
-     * if has word match, move to next postion as create two sets of new permutations one to contiunie with leading chars
-     * and new one starting from postioin 0 *
-     *
-     * If words match need to store them and keep track of what words proceed them if any
-     */
 

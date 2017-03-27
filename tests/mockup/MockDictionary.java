@@ -1,7 +1,5 @@
 package mockup;
 
-import java.util.Dictionary;
-
 /**
  * Created by louie on 19/03/2017.
  */

@@ -1,10 +1,3 @@
-/**1800-Coding-Chalange
- * Auther: louie on 18/03/2017
- * Date: 27/03/2017
- * Purpose: This program reads in numbers and finds a combination of words
- * that can be used to encode that number e.g 225563 = CALLME
- */
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,32 +5,42 @@ public class Main {
 
     private static Scanner scanner = new Scanner(System.in);
     private static String dictionaryFilePath =  "Dictionary.txt";
-    final static String operatingSystem = System.getProperty("os.name");
 
+    /**1800-Coding-Challenge
+     * Author: louie on 18/03/2017
+     * Date: 27/03/2017
+     * Purpose: This program reads in numbers and finds a combination of words
+     * that can be used to encode that number e.g 225563 = CALLME
+     */
     public static void main(String[] args) {
         int selection;
+        String  numbers[];
         boolean quit = false;
 
         if (args.length > 0 && args[0].equals("-d")){
             dictionaryFilePath = args[1];
         }
 
-        /** Load default dictionary */
+        /* Load default dictionary */
         if(!Dictionary.load(dictionaryFilePath)){
             System.out.println("Check your file path and try again.");
         }
         else {
             while (true) {
                 printMenu();
-                selection = getMenuInput();
+                selection = getMenuInput(scanner.nextLine());
 
                 switch (selection) {
                     case 1:
-                        selectFileForMatching();
+                        System.out.println("Enter file path");
+                        numbers = selectFileForMatching(scanner.nextLine());
+                        searchForMatches(numbers);
                         break;
 
                     case 2:
-                        enterStringForMatching();
+                        System.out.print("Enter number: ");
+                        numbers = enterStringForMatching(scanner.nextLine());
+                        searchForMatches(numbers);
                         break;
 
                     case 3:
@@ -53,7 +56,6 @@ public class Main {
                 }
             }
         }
-
     }
     /** Prints menu */
     private static void printMenu() {
@@ -70,13 +72,11 @@ public class Main {
         System.out.print("Option: ");
     }
 
-    /** gets selection from user */
-    private static int getMenuInput() {
-        String rawInput;
+    /** Gets selection from user returns int */
+    public static int getMenuInput(String rawInput) {
         char menuInput;
 
-        rawInput = scanner.nextLine();
-        if(rawInput.isEmpty()){
+        if(rawInput == null){
             menuInput = 'x';
         }else{
             menuInput = rawInput.charAt(0);
@@ -84,18 +84,19 @@ public class Main {
         return Character.getNumericValue(menuInput);
     }
 
-    /** Gets number to search from user */
-    private static void enterStringForMatching() {
+    /** Gets number to search from user returns int*/
+    public static String[] enterStringForMatching(String rawInput) {
         String []inputs = new String[1];
-        String rawInput;
 
-        System.out.print("Enter number: ");
-        rawInput = scanner.nextLine();
+        if(rawInput == null){
+            return null;
+        }
         rawInput = rawInput.replaceAll("[^0-9]","");
         if(!rawInput.isEmpty()){
-            inputs[0] = rawInput;
-            searchForMatches(inputs);
+             inputs[0] = rawInput;
+            return inputs;
         }
+        return null;
     }
 
     /** Finds all matches */
@@ -123,19 +124,16 @@ public class Main {
     }
 
     /** Gets file path from users to load file for use in matching */
-    private static void selectFileForMatching() {
-        String filePath;
+    public static String[] selectFileForMatching(String rawInput) {
         ArrayList<String> input = new ArrayList<>();
 
-        System.out.println("Enter file path");
-        filePath = scanner.nextLine();
-
-        if(filePath == null) {
-                /*do nothing*/
+        if(rawInput == null) {
+            System.out.println("No input give");
+            return null;
         }
+        dictionaryFilePath = rawInput;
         try {
-            Scanner scanFile = new Scanner(new File(filePath));
-
+            Scanner scanFile = new Scanner(new File(dictionaryFilePath));
             while (scanFile.hasNext()) {
                 input.add(scanFile.nextLine().replaceAll("[^0-9]",""));
             }
@@ -143,16 +141,18 @@ public class Main {
 
             if (input.isEmpty()) {
                 System.out.println("File did not contain any words");
-            } else {
+            }
+            else {
                 System.out.println("File loaded, searching for matches...");
-                searchForMatches(input.toArray(new String[input.size()]));
+                return input.toArray(new String[input.size()]);
             }
             System.out.println("Hit any key to return to menu.");
             scanner.nextLine();
         }
         catch (Exception e) {
-            System.out.println("File does not exist: "+filePath);
+            System.out.println("File does not exist: "+dictionaryFilePath);
         }
+        return null;
     }
 }
 

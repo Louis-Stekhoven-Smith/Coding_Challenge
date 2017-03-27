@@ -1,17 +1,9 @@
 /**Encode class
  * This class reads in a numeric number and encodes it
- * Created by louie on 19/03/2017.
- */
+ * Created by louie on 19/03/2017. */
 public class Encode {
 
-    private String[] possibleKeys3 = new String[3];
-    private String[] possibleKeys4 = new String[4];
-
-    public Encode(){
-
-    }
-
-    /**Returns the charaters that match the input */
+    /**Returns the characters that match the input */
     public static char[] getPossibleKeys(char charInput){
 
         int intInput;
@@ -54,7 +46,8 @@ public class Encode {
 
     }
 
-    /** Helpers */
+    /** Encodes a given number into its possible characters
+     * returns array of said characters  */
     private static char[] possibleKeys(String code){
 
         char[] keys;

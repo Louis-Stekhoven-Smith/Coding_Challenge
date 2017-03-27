@@ -1,10 +1,3 @@
-/**Permutation Class
- *This class generates each permutation the input number can
- * be encoded too. It recursively calls its self to add an extra
- * digit to the permutation at a time. If no words are found to be matching
- * the permutation the recursive call breaks out.
- * Created by louie on 22/03/2017.
- */
 import java.util.ArrayList;
 public class Permutation {
 
@@ -13,17 +6,22 @@ public class Permutation {
     private int numberOfCharsProceeding;
     private Search search;
     private Boolean isAWord = false;
-    private Encode encode = new Encode();
     private ArrayList<String> foundWords = new ArrayList<>();
     private static final int nextInputNumber = 0;
     private char currentDigit;
 
 
+    /**Permutation Class
+     *This class generates each permutation the input number can
+     * be encoded too. It recursively calls its self to add an extra
+     * digit to the permutation at a time. If no words are found to be matching
+     * the permutation the recursive call breaks out.
+     * Created by louie on 22/03/2017.*/
     Permutation(String currentPermutation, int numberOfCharsProceeding, String remainingInput,
                 String[] dictionary) {
 
         if(currentPermutation == null){
-            System.out.println("No input given - Stopped Search");
+            System.err.println("No input given - Stopped Search");
         }else{
             updateData(currentPermutation, numberOfCharsProceeding, remainingInput, dictionary);
             generateNewSubDictionary();
@@ -46,7 +44,7 @@ public class Permutation {
         this.numberOfCharsProceeding = numberOfCharsProceeding;
     }
 
-    /** Helpers
+    /** Helpers */
      /** Checks if current permutation is a one to one match with string e.g. 2255 = CALL
      * If it is a one to one match or there is no input left to parse then stop search
      * Otherwise continue recursive search*/
@@ -58,17 +56,17 @@ public class Permutation {
         }
         else if (permutationIsWord()) {
 
-            /** Ignore match and keep searching for larger words */
+            /*Ignore match and keep searching for larger words */
             recursivePermutations();
 
-            /** Search for multi word match */
+            /* Search for multi word match */
             resetSearchParameters();
             currentPermutation += "-";
             recursivePermutations();
 
             addDigitAfterWordSearchAgain();
         }
-        /** Keep searching */
+        /* Keep searching */
         else{
             recursivePermutations();
             addLeadingDigitAndSearchAgain();
@@ -80,7 +78,7 @@ public class Permutation {
         char[] possibleKeys;
         String newRemainingInput;
 
-        /**Get encodings for the next number, and update*/
+        /*Get encodings for the next number, and update*/
         currentDigit = remainingInput.charAt(nextInputNumber);
         possibleKeys = Encode.getPossibleKeys(currentDigit);
 
@@ -102,7 +100,7 @@ public class Permutation {
         Permutation nextPermutation = new Permutation(newPermutation, numberOfCharsProceeding, newRemainingInput,
                 subDictionary);
 
-        /** Feeding the word back out of the recursive stack*/
+        /* Feeding the word back out of the recursive stack*/
         if (nextPermutation.isAWord) {
             foundWords.addAll(nextPermutation.getFoundWords());
             isAWord = true;
@@ -184,7 +182,7 @@ public class Permutation {
     private void generateNewSubDictionary(){
         char currentChar;
         if(currentPermutation.equals("")){
-            /** do nothing */
+            /* do nothing */
         }
         else{
             currentChar = currentPermutation.charAt(currentPermutation.length() -1);
@@ -197,7 +195,7 @@ public class Permutation {
     private void resetSearchParameters() {
         numberOfCharsProceeding = -1;
 
-        /** Reset Dictionary to include all words */
+        /* Reset Dictionary to include all words */
         subDictionary = Dictionary.getDictionary();
 
         if(subDictionary == null){
