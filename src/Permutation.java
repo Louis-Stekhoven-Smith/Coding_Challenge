@@ -26,7 +26,7 @@ public class Permutation {
             updateData(currentPermutation, numberOfCharsProceeding, remainingInput, dictionary);
             generateNewSubDictionary();
 
-            if(!(subDictionary == null)){
+            if(!hasWordsMatching()){
                 /* Stop search */
             }
             else {
@@ -215,17 +215,17 @@ public class Permutation {
         }
     }
 
-    /* Getters */
-    /** Returns array of all words found for a given number */
+    /** Getters */
+    public Boolean hasWordsMatching(){
+        return (subDictionary != null);
+    }
     public ArrayList<String> getFoundWords(){
         return foundWords;
     }
-    /**Returns true if the current permutation is a word*/
     public Boolean isAWord(){
         return isAWord;
     }
 
-    /** Returns the current permutation as a string */
     public String getPermutation(){
         return currentPermutation;
     }
