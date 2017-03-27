@@ -26,7 +26,8 @@ public class Permutation {
             updateData(currentPermutation, numberOfCharsProceeding, remainingInput, dictionary);
             generateNewSubDictionary();
 
-            if(!hasWordsMatching()){
+            if(!(subDictionary == null)){
+                /* Stop search */
             }
             else {
                 continueSearch();
@@ -44,7 +45,7 @@ public class Permutation {
         this.numberOfCharsProceeding = numberOfCharsProceeding;
     }
 
-    /** Helpers */
+    /* Helpers */
      /** Checks if current permutation is a one to one match with string e.g. 2255 = CALL
      * If it is a one to one match or there is no input left to parse then stop search
      * Otherwise continue recursive search*/
@@ -214,20 +215,17 @@ public class Permutation {
         }
     }
 
-    /** Getters */
-    public Boolean hasWordsMatching(){
-        if(subDictionary == null){
-            return false;
-        }
-        else return true;
-    }
+    /* Getters */
+    /** Returns array of all words found for a given number */
     public ArrayList<String> getFoundWords(){
         return foundWords;
     }
+    /**Returns true if the current permutation is a word*/
     public Boolean isAWord(){
         return isAWord;
     }
 
+    /** Returns the current permutation as a string */
     public String getPermutation(){
         return currentPermutation;
     }
